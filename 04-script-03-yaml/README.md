@@ -173,8 +173,7 @@ Process finished with exit code 0
 - google.com.: 64.233.164.101
 - drive.google.com: 173.194.220.194
 - mail.google.com: 209.85.233.18
-{"mail.google.com": "Error: 209.85.233.18 -> 209.85.233.18"}- google.com.: 64.233.164.101
-
+- mail.google.com: "Error: 209.85.233.18 -> 209.85.233.18"
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению

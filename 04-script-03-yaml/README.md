@@ -67,6 +67,7 @@ def check_ip(hosts):
     j_file = open("hosts.json", "w")
     j_file.close()
     y_file = open("hosts.yaml", 'w')
+    data = []
 
     while is_ip_static:
         for host in hosts:
@@ -74,17 +75,20 @@ def check_ip(hosts):
             print(host, ip)
             # json
             if open("hosts.json", "r+").read():
-                data = json.load(open("hosts.json"))
-                data.update({host: ip})
+                outfile = json.load(open("hosts.json"))
+                outfile.append({host: ip})
+                with open("hosts.json", mode='w') as f:
+                    f.write(json.dumps(outfile, indent=2))
+                    f.close()
             else:
-                data = {host: ip}
-            j_data = json.dumps(data)
-            j_file = open("hosts.json", "w")
-            j_file.write(j_data)
-            j_file.close()
+                data.append({host: ip})
+                with open("hosts.json", mode='w') as f:
+                    f.write(json.dumps(data, indent=2))
+                    f.close()
             # yaml
             y_data = yaml.dump([{host: ip}])
             y_file.write(y_data)
+
             # set current ip dict
             if not hosts_matrix.get(host):
                 hosts_matrix.update({host: ip})
@@ -92,17 +96,21 @@ def check_ip(hosts):
                 if hosts_matrix.get(host) != ip:
                     print('[ERROR]: ',  host, ' IP mismatch: ', hosts_matrix.get(host), ' ', ip, '.')
                     y_file.write(json.dumps({host: 'Error: ' + str(ip) + ' -> ' + str(ip)}))
-                    data = json.load(open("hosts.json"))
-                    data.update({host: 'Error: ' + str(ip) + ' -> ' + str(ip)})
-                    j_file = open("hosts.json", "w")
-                    j_file.write(json.dumps(data))
-                    j_file.close()
+
+                    outfile = json.load(open("hosts.json"))
+                    outfile.append({host: 'Error: ' + str(ip) + ' -> ' + str(ip)})
+                    with open("hosts.json", mode='w') as f:
+                        f.write(json.dumps(outfile, indent=2))
+                        f.close()
+
                     is_ip_static = False
 
-        print(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'IPs checked.')
+        if is_ip_static:
+            print(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'IPs checked.')
 
         time.sleep(2)
 
+    y_file.close()
 
 # Запуск загрузки
 if __name__ == "__main__":
@@ -112,68 +120,384 @@ if __name__ == "__main__":
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-drive.google.com 173.194.220.194
-mail.google.com 64.233.164.19
-google.com. 64.233.164.101
-2022-01-14 22:53:09 IPs checked.
-drive.google.com 173.194.220.194
-mail.google.com 64.233.164.19
-google.com. 64.233.164.101
-2022-01-14 22:53:11 IPs checked.
-drive.google.com 173.194.220.194
-mail.google.com 209.85.233.18
-[ERROR]:  mail.google.com  IP mismatch:  64.233.164.19   209.85.233.18 .
-google.com. 64.233.164.101
-2022-01-14 22:53:13 IPs checked.
-
-Process finished with exit code 0
+C:\Users\turganovai\AppData\Local\Programs\Python\Python37\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2020.3\plugins\python-ce\helpers\pydev\pydevd.py" --multiproc --qt-support=auto --client 127.0.0.1 --port 52282 --file C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-03-yaml/4_3_2.py
+Connected to pydev debugger (build 203.5981.165)
+2022-01-15 12:15:04 Старт проверки ip.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:17:45 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:17:51 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:17:53 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:17:55 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:17:57 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:17:59 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:01 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:03 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:05 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:07 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:09 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:11 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:13 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:15 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:17 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:19 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:21 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:23 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:25 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:27 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:29 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:31 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:33 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.19
+google.com. 64.233.161.101
+2022-01-15 12:18:35 IPs checked.
+drive.google.com 64.233.165.194
+mail.google.com 64.233.161.17
+[ERROR]:  mail.google.com  IP mismatch:  64.233.161.19   64.233.161.17.
 
 ```
 
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```json
-{"drive.google.com": "173.194.220.194", "mail.google.com": "Error: 209.85.233.18 -> 209.85.233.18", "google.com.": "64.233.164.101"}
+[
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.19"
+  },
+  {
+    "google.com.": "64.233.161.101"
+  },
+  {
+    "drive.google.com": "64.233.165.194"
+  },
+  {
+    "mail.google.com": "64.233.161.17"
+  },
+  {
+    "mail.google.com": "Error: 64.233.161.17 -> 64.233.161.17"
+  }
+]
 ```
 
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```yaml
-...
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 64.233.164.19
-- google.com.: 64.233.164.101
-- drive.google.com: 173.194.220.194
-- mail.google.com: 209.85.233.18
-{"mail.google.com": "Error: 209.85.233.18 -> 209.85.233.18"}- google.com.: 64.233.164.101
-
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.19
+- google.com.: 64.233.161.101
+- drive.google.com: 64.233.165.194
+- mail.google.com: 64.233.161.17
+- "mail.google.com": "Error: 64.233.161.17 -> 64.233.161.17"
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению

@@ -116,6 +116,7 @@ def check_ip(hosts):
 if __name__ == "__main__":
     hosts = ['drive.google.com', 'mail.google.com', 'google.com.']
     check_ip(hosts)
+
 ```
 
 ### Вывод скрипта при запуске при тестировании:

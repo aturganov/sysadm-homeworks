@@ -112,10 +112,10 @@ for result in result_os.split('\n'):
 ```
 C:\Users\turganovai\AppData\Local\Programs\Python\Python37\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2020.3\plugins\python-ce\helpers\pydev\pydevd.py" --multiproc --qt-support=auto --client 127.0.0.1 --port 55747 --file C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/4_2_3.py
 Connected to pydev debugger (build 203.5981.165)
-C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\.env
-C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\4_2_2.py
-C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\4_2_3.py
-C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\README.md
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/.env
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/4_2_2.py
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/4_2_3.py
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/README.md
 
 Process finished with exit code 0
 ```

@@ -7,3 +7,4 @@
 *.iml
 out
 gen
+/04-script-03-yaml/hosts.yaml

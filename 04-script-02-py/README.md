@@ -38,17 +38,43 @@ for result in result_os.split('\n'):
     if result.find('modified') != -1:
         prepare_result = result.replace('\tmodified:   ', '')
         print(prepare_result)
-        break
+        # Убираем break, чтоб видеть все изменения
+        # break
 ```
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+from pathlib import Path
+
+# bash_command = ["cd ~/netology/sysadm-homeworks", "git status"]
+# специфика windows машины
+
+folder_check = str(Path.home()) + "\\Documents\\netology\\sysadm-homeworks"
+bash_command = ["cd " + folder_check, "git status"]
+
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        # Добавляем полный путь
+        print(folder_check + '\\' + prepare_result)
+        # Убираем break, чтоб видеть все изменения
+        # break
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\turganovai\AppData\Local\Programs\Python\Python37\python.exe C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/4_2_2.py
+C:\Users\turganovai\Documents\netology\sysadm-homeworks\.gitignore
+C:\Users\turganovai\Documents\netology\sysadm-homeworks\04-script-02-py/4_2_2.py
+C:\Users\turganovai\Documents\netology\sysadm-homeworks\04-script-02-py/README.md
+
+Process finished with exit code 0
 ```
 
 ## Обязательная задача 3

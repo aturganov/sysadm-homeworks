@@ -123,8 +123,7 @@ google.com. 64.233.164.101
 2022-01-14 22:53:11 IPs checked.
 drive.google.com 173.194.220.194
 mail.google.com 209.85.233.18
-[ERROR]:  mail.google.com  IP mismatch:  64.233.164.19   209.85.233.18 .
-google.com. 64.233.164.101
+[ERROR]:  mail.google.com  IP mismatch:  64.233.164.19   209.85.233.18
 2022-01-14 22:53:13 IPs checked.
 
 Process finished with exit code 0

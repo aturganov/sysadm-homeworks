@@ -51,6 +51,7 @@ from pathlib import Path
 
 # bash_command = ["cd ~/netology/sysadm-homeworks", "git status"]
 # специфика windows машины
+# "~/" - директория пользователя линукс заменил на директорию пользователя windows по windows аккаунту
 
 folder_check = str(Path.home()) + "\\Documents\\netology\\sysadm-homeworks"
 bash_command = ["cd " + folder_check, "git status"]
@@ -71,8 +72,8 @@ for result in result_os.split('\n'):
 ```
 C:\Users\turganovai\AppData\Local\Programs\Python\Python37\python.exe C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/4_2_2.py
 C:\Users\turganovai\Documents\netology\sysadm-homeworks\.gitignore
-C:\Users\turganovai\Documents\netology\sysadm-homeworks\04-script-02-py/4_2_2.py
-C:\Users\turganovai\Documents\netology\sysadm-homeworks\04-script-02-py/README.md
+C:\Users\turganovai\Documents\netology\sysadm-homeworks\04-script-02-py\4_2_2.py
+C:\Users\turganovai\Documents\netology\sysadm-homeworks\04-script-02-py\README.md
 
 Process finished with exit code 0
 ```
@@ -82,12 +83,42 @@ Process finished with exit code 0
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(os.getcwd() + '/.env')
+
+# bash_command = ["cd ~/netology/sysadm-homeworks", "git status"]
+# специфика windows машины
+
+folder_check = os.environ['GIT_PATH']
+bash_command = ["cd " + folder_check, "git status"]
+
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        # Добавляем полный путь
+        print(folder_check + '\\' + prepare_result)
+        # Убираем break, чтоб видеть все изменения
+        # break
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\turganovai\AppData\Local\Programs\Python\Python37\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2020.3\plugins\python-ce\helpers\pydev\pydevd.py" --multiproc --qt-support=auto --client 127.0.0.1 --port 55747 --file C:/Users/turganovai/Documents/netology/sysadm-homeworks/04-script-02-py/4_2_3.py
+Connected to pydev debugger (build 203.5981.165)
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\.env
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\4_2_2.py
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\4_2_3.py
+C:/Users/turganovai/Documents/netology/sysadm-homeworks/\04-script-02-py\README.md
+
+Process finished with exit code 0
 ```
 
 ## Обязательная задача 4
